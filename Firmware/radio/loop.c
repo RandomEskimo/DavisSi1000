@@ -119,7 +119,7 @@ __xdata static struct {
 	uint32_t recv_packets;
 	uint32_t bad_crc;
 
-	uint8_t wind_speed_mph;
+	uint8_t wind_speed_ms;
 	uint16_t wind_direction_degrees;
 	float temperature_F;
 	uint16_t light;
@@ -208,7 +208,7 @@ static void show_iss_data(void)
 		printf("\"bad_CRC\": %lu, ", (unsigned long)iss_data.bad_crc);
 	}
 	if (iss_data.valid_mask & VALID_WIND_SPEED) {
-		printf("\"wind_speed_mph\": %u, ", (unsigned)iss_data.wind_speed_mph);
+		printf("\"wind_speed_ms\": %u, ", (unsigned)iss_data.wind_speed_ms);
 	}
 	if (iss_data.valid_mask & VALID_WIND_DIRECTION) {
 		printf("\"wind_direction_degrees\": %u, ", (unsigned)iss_data.wind_direction_degrees);
@@ -274,7 +274,7 @@ static void parse_iss_data(void)
 	iss_data.transmitter_id = pbuf[0]&0x7;
 	iss_data.valid_mask |= VALID_TRANSMITTER;
 
-	iss_data.wind_speed_mph = pbuf[1];
+	iss_data.wind_speed_ms = pbuf[1];
 	iss_data.valid_mask |= VALID_WIND_SPEED;
 
 	if (pbuf[2] != 0) {
